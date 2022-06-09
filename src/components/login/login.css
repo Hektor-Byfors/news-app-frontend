@@ -1,0 +1,11 @@
+div {
+    display: flex;
+    justify-content: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    margin-top: 50px;
+}
