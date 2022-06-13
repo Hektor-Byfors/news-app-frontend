@@ -1,5 +1,6 @@
 import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import "./login.css"
 
 export const Login = () => {
@@ -10,6 +11,8 @@ export const Login = () => {
         _id:string;
     }
 
+    const navigate = useNavigate();
+    const [loginFail, setLoginFail] = useState(false);
     const [users, setUsers] = useState<IUser[]>([]);
     const [login, setLogin] = useState({
         email: "",
@@ -27,11 +30,22 @@ export const Login = () => {
     const handleLogin = () => {
         users.forEach(user => {
             if(user.email === login.email && user.password === login.password) {
-                console.log("correct login");
+                setLoginFail(false);
+                localStorage.setItem("userId", user._id);
+                navigate("/home");
+            } else {
+                setLoginFail(true);
             }
-        })
-        
+        });
     };
+
+    useEffect(() => {
+        if(!localStorage.getItem("userId")) {
+            return;
+        } else {
+            navigate("/home")
+        };
+    });
     
     useEffect(() => {
         if(users.length > 0) return;
@@ -49,6 +63,7 @@ export const Login = () => {
                 <label>Password</label>
                 <input type="password" name="password" value={login.password} onChange={handleChange} />
                 <button onClick={handleLogin}>Login</button>
+                {loginFail && (<p>Incorrect login</p>)}
             </form>
         </div> 
     )

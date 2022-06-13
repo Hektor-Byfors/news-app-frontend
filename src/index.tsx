@@ -3,13 +3,22 @@ import ReactDOMClient from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Login } from './components/login/login';
+import { Create } from './components/create-user/create';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Home } from './components/home/home';
 
 const container = document.getElementById("root");
 const root = ReactDOMClient.createRoot(container as Element);
 
 root.render(
   <React.StrictMode>
-    <Login />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Login />}/>
+        <Route path="/create" element={<Create />}/>
+        <Route path="/home" element={<Home />}/>
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
