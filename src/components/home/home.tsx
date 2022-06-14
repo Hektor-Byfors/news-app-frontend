@@ -1,5 +1,6 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import "./home.css"
 
 export const Home = () => {
@@ -11,6 +12,20 @@ export const Home = () => {
     }
 
     const [user, setUser] = useState<IUser>();
+    const navigate = useNavigate();
+
+    const logOut = () => {
+        localStorage.removeItem("userId");
+        navigate("/");
+    }
+
+    useEffect(() => {
+        if(localStorage.getItem("userId")) {
+            return;
+        } else {
+            navigate("/");
+        }
+    }, [])
 
     useEffect(() => {
         let userId = localStorage.getItem("userId");
@@ -31,13 +46,12 @@ export const Home = () => {
         
     }, [])
 
-    console.log(user?.newsLetterSub);
-    
-
     return (
         <div>
             <h1>Homepage</h1>
             <h3>logged in as: { user?.email }</h3>
+            
+            <button onClick={logOut}>Log out</button>
         </div>
         
     )

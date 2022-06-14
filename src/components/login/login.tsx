@@ -39,6 +39,10 @@ export const Login = () => {
         });
     };
 
+    const createUser = () => {
+        navigate("/create");
+    }
+
     useEffect(() => {
         if(!localStorage.getItem("userId")) {
             return;
@@ -63,6 +67,7 @@ export const Login = () => {
                 <label>Password</label>
                 <input type="password" name="password" value={login.password} onChange={handleChange} />
                 <button onClick={handleLogin}>Login</button>
+                <button onClick={createUser}>Create account</button>
                 {loginFail && (<p>Incorrect login</p>)}
             </form>
         </div> 
