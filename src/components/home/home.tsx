@@ -13,10 +13,30 @@ export const Home = () => {
 
     const [user, setUser] = useState<IUser>();
     const navigate = useNavigate();
-
+    
     const logOut = () => {
         localStorage.removeItem("userId");
         navigate("/");
+    }
+
+    const handleChange = () => {
+        let userId = localStorage.getItem("userId");
+
+        let axiosCall = axios.put("http://localhost:3001/users/" + userId, { newsLetterSub : !user?.newsLetterSub })
+                .then((response) => {
+                    return response.data
+                })
+
+        let waitUpdate = async () => {
+            let update = await axiosCall;
+            setUser(update);
+        }
+
+        waitUpdate()
+
+        alert("subscription updated")
+        window.location.reload();
+        
     }
 
     useEffect(() => {
@@ -25,12 +45,13 @@ export const Home = () => {
         } else {
             navigate("/");
         }
-    }, [])
-
+    }, [user])
+    
     useEffect(() => {
         let userId = localStorage.getItem("userId");
         
-        axios.get<IUser[]>("http://localhost:3001/users")
+        if(user === undefined) {
+           axios.get<IUser[]>("http://localhost:3001/users")
             .then((response) => {
                 let userList = response.data;
                 
@@ -42,15 +63,20 @@ export const Home = () => {
                     
                 })
                 
-            })
-        
-    }, [])
-
+            }) 
+        } else {
+            return
+        }
+    })
+    
     return (
         <div>
             <h1>Homepage</h1>
             <h3>logged in as: { user?.email }</h3>
-            
+            { user?.newsLetterSub && <p>You are subscribed to our newsletter!</p> }
+            { user?.newsLetterSub &&  <button onClick={handleChange}>unsubscribe</button>}
+            { !user?.newsLetterSub && <p>You are not subscribed to our newsletter.</p> }
+            { !user?.newsLetterSub &&  <button onClick={handleChange}>Subscribe!</button>}
             <button onClick={logOut}>Log out</button>
         </div>
         

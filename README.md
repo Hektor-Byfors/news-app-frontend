@@ -1,3 +1,18 @@
+ ### run `npm install` to install dependencies
+ ### run `npm start` to start application in development mode
+ app runs on localhost:3000
+
+Note that the application will not work properly if the backend server is not running locally.
+
+
+
+
+
+
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
