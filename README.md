@@ -1,3 +1,8 @@
+This is a React application using Typescript
+packages used outside of React itself:
+"axios" for HTTP requests
+"react-router-dom" for easier routing within application
+ 
  ### run `npm install` to install dependencies
  ### run `npm start` to start application in development mode
  app runs on localhost:3000
